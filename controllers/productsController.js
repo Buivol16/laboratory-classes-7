@@ -5,9 +5,9 @@ const { STATUS_CODE } = require("../constants/statusCode");
 
 const cartController = require("./cartController");
 
-exports.getProductsView = (request, response) => {
+exports.getProductsView = async (request, response) => {
   const cartCount = cartController.getProductsCount();
-  const products = Product.getAll();
+  const products = await Product.getAll();
 
   response.render("products.ejs", {
     headTitle: "Shop - Products",
@@ -45,11 +45,11 @@ exports.getNewProductView = (request, response) => {
   });
 };
 
-exports.getProductView = (request, response) => {
+exports.getProductView = async (request, response) => {
   const cartCount = cartController.getProductsCount();
   const name = request.params.name;
 
-  const product = Product.findByName(name);
+  const product = await Product.findByName(name);
 
   response.render("product.ejs", {
     headTitle: "Shop - Product",
